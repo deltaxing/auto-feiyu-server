@@ -1,0 +1,24 @@
+{
+  "name": "auto-feiyu-server",
+  "version": "1.0.0",
+  "description": "automate bytedance's feiyu-crm to help my wife",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "auto",
+    "feiyu",
+    "飞鱼",
+    "自动"
+  ],
+  "author": "deltaxing",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "socket.io": "^2.2.0",
+    "socket.io-file": "^2.0.31",
+    "socket.io-file-client": "^2.0.2"
+  }
+}

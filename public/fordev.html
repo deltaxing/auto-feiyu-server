@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+    <link rel="stylesheet" href="./viewer.min.css">
+    <script src="./viewer.min.js"></script>
+</head>
+<body>
+    <input>
+    <br>
+    <input id="username" type="text">
+    <input id="msg" type="text">
+    <input id="btnSend" type="button" value="send">
+
+    <script src="http://feiyu.gocoxing.cn/socket.io/socket.io.js"></script>
+    <script >
+            async function Main(){            
+                var username = document.querySelector('#username').value = "ChaoBiao";
+                //var socket = io('http://feiyu.gocoxing.cn');
+				//var socket = io('http://192.168.8.107:3001');
+                //var socket = io('http://192.168.43.28:3001');
+                var socket = io('http://192.168.1.102:3001');
+                socket.on('connect', ()=>{
+                    //document.querySelector('input').value = "connected";
+                    socket.emit('join', username, (data) => {
+                          console.log(data); // data will be 'woot'
+                    });
+                }).on('message', (msg) => {
+                    console.log(msg);
+                    if(msg.length > 1000){
+                        var elImage = document.createElement('img');
+                        elImage.src = 'data:image/png;base64, ' + msg.replace(/ /g, '+');
+                        elImage.style = 'display:none';
+                        document.body.append(elImage);
+                        const viewer = new Viewer(elImage, {
+                            viewed() {
+                                viewer.zoomTo(1);
+                            },
+                        });
+                        viewer.show();
+                    }
+                        
+                });
+
+                document.querySelector('#btnSend').onclick = () => {
+                    var msg = document.querySelector('#msg').value;
+                    socket.send(msg);
+                    document.body.append(document.createElement('p',{text: msg}))
+                }
+            
+            }
+            
+            Main().then();
+
+    </script>
+</body>
+</html>
